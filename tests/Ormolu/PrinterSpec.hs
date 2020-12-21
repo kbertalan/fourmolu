@@ -7,7 +7,7 @@ import Control.Exception
 import Control.Monad
 import Control.Monad.IO.Class
 import Control.Monad.Identity
-import Data.List (intercalate, isSuffixOf)
+import Data.List (intercalate, isPrefixOf, isSuffixOf)
 import Data.Text (Text)
 import qualified Data.Text as T
 import qualified Data.Text.IO as T
@@ -60,7 +60,7 @@ spec = parallel $ do
         ]
       allOptsWithSuffixes = (\opt -> (opt, suffixForOpt opt)) <$> allOpts
 
-  sequence_ $ uncurry checkExample <$> allOptsWithSuffixes <*> es <*> [False]
+  sequence_ $ uncurry checkExample <$> allOptsWithSuffixes <*> filter isComplex es <*> [False]
 
 enumOptions :: (Monad m, Enum a, Bounded a) => [m a]
 enumOptions = pure <$> enumFromTo minBound maxBound
@@ -122,6 +122,10 @@ isInput path =
   let s = fromRelFile path
       (s', exts) = F.splitExtensions s
    in exts == ".hs" && not ("-out" `isSuffixOf` s')
+
+isComplex :: Path Rel File -> Bool
+isComplex path =
+  "complex/" `isPrefixOf` fromRelFile path
 
 -- | For given path of input file return expected name of output.
 deriveOutput :: String -> Path Rel File -> IO (Path Rel File)
