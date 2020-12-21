@@ -29,14 +29,7 @@ module Ormolu.Config
   )
 where
 
-import Data.Aeson
-  ( FromJSON (..),
-    camelTo2,
-    constructorTagModifier,
-    defaultOptions,
-    fieldLabelModifier,
-    genericParseJSON,
-  )
+import Data.Aeson (FromJSON (..), camelTo2, constructorTagModifier, defaultOptions, fieldLabelModifier, genericParseJSON)
 import qualified Data.ByteString.Lazy as BS
 import Data.Char (isLower)
 import Data.Functor.Identity (Identity (..))

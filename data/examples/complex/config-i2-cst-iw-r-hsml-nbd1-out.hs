@@ -29,21 +29,17 @@ module Ormolu.Config
   )
 where
 
-import Data.Aeson
-  ( FromJSON (..),
-    camelTo2,
-    constructorTagModifier,
-    defaultOptions,
-    fieldLabelModifier,
-    genericParseJSON,
-  )
+import Data.Aeson (FromJSON (..), camelTo2, constructorTagModifier, defaultOptions, fieldLabelModifier, genericParseJSON)
 import qualified Data.ByteString.Lazy as BS
 import Data.Char (isLower)
 import Data.Functor.Identity (Identity (..))
 import Data.YAML (Pos)
 import Data.YAML.Aeson (decode1)
+
 import GHC.Generics (Generic)
+
 import qualified SrcLoc as GHC
+
 import System.Directory
   ( XdgDirectory (XdgConfig),
     findFile,
